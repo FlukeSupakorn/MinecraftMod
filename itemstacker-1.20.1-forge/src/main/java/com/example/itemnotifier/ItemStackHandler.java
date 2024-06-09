@@ -1,5 +1,11 @@
 package com.example.itemstacker;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextColor;
@@ -17,31 +23,14 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 @Mod.EventBusSubscriber(modid = ItemStackerMod.MODID)
 public class ItemStackHandler {
 
     private static final Set<ItemEntity> trackedItems = new HashSet<>();
     private static final Map<ItemEntity, Long> lastChecked = new HashMap<>();
     private static final int STACKING_RADIUS = 5; // Radius within which items should be checked
-    private static final long CHECK_INTERVAL = 1000; // Check interval in milliseconds
+    private static final long CHECK_INTERVAL = 250; // Check interval in milliseconds
     private static final int PLAYER_RADIUS = 32; // Radius around the player to check items
-    private static Field onGroundField;
-
-    static {
-        try {
-            onGroundField = Entity.class.getDeclaredField("onGround");
-            onGroundField.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-    }
 
     @SubscribeEvent
     public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
@@ -120,15 +109,6 @@ public class ItemStackHandler {
         }
     }
 
-    private static boolean isOnGround(ItemEntity itemEntity) {
-        try {
-            return onGroundField.getBoolean(itemEntity);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     private static void setItemDisplayName(ItemEntity itemEntity) {
         ItemStack stack = itemEntity.getItem();
         String itemName = stack.getHoverName().getString();
@@ -203,6 +183,10 @@ public class ItemStackHandler {
         sourceStack.setCount(0); // Clear the source stack
 
         setItemDisplayName(targetEntity);
+    }
+
+    private static boolean isOnGround(ItemEntity itemEntity) {
+        return itemEntity.getDeltaMovement().lengthSqr() < 0.001;
     }
 
     /*
