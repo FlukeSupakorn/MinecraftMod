@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "java",
+          "name": "Debug Minecraft",
+          "request": "launch",
+          "mainClass": "net.minecraftforge.userdev.LaunchTesting",
+          "projectName": "excavation",
+          "vmArgs": "-Dfml.coreMods.load=net.minecraftforge.fml.relauncher.CoreModManager -Dnet.minecraftforge.logging=all -Djava.library.path=${workspaceFolder}/run/natives",
+          "cwd": "${workspaceFolder}/run",
+          "classPaths": [
+              "${workspaceFolder}/build/classes/java/main",
+              "${workspaceFolder}/build/resources/main",
+              "${workspaceFolder}/build/libs/*"
+          ]
+      }
+  ]
+}
