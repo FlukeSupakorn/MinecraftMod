@@ -16,13 +16,14 @@ public class ItemStackerMod {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
 
-        MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ItemStackHandler());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        // Register any setup code here
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
+        // Register any client-specific setup code here
     }
 }
