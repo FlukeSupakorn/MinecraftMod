@@ -5,6 +5,7 @@ import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -21,7 +22,7 @@ public class KeyBindings {
     public static final KeyMapping TOGGLE_STACKING_MODE = new KeyMapping(
         "key.itemstacker.toggle_stacking_mode",
         InputConstants.Type.KEYSYM,
-        GLFW.GLFW_KEY_M,
+        GLFW.GLFW_KEY_UNKNOWN,
         "key.categories.itemstacker"
     );
 
@@ -69,7 +70,7 @@ public class KeyBindings {
     }
 
     private static void sendMessageToPlayer(String message, String color) {
-        net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         if (mc.player != null) {
             int colorCode;
             switch (color.toLowerCase()) {
