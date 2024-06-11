@@ -127,9 +127,11 @@ public class ItemStackHandler {
         }
 
         if (!EnchantmentHelper.getEnchantments(stack).isEmpty()) {
+            customName.append(Component.literal(" "));
             for (Entry<Enchantment, Integer> enchantment : EnchantmentHelper.getEnchantments(stack).entrySet()) {
-                customName.append(Component.literal(" " + enchantment.getKey().getFullname(enchantment.getValue()).getString())
-                        .withStyle(style -> style.withColor(TextColor.fromRgb(0xAA00FF)))); // Purple color for enchantments
+                Enchantment enchant = enchantment.getKey();
+                int level = enchantment.getValue();
+                customName.append(Component.literal(enchant.getFullname(level).getString()).withStyle(style -> style.withColor(TextColor.fromRgb(0xAA00FF)))).append(Component.literal(" ")); // Purple color for enchantments
             }
         }
 
