@@ -72,11 +72,11 @@ public class ExcavationMod {
         ItemStack tool = event.getPlayer().getMainHandItem();
 
         if (OreUtils.isOre(state)) {
-            mineAdjacentBlocks(level, pos, state, visited, 0, Config.oreMiningRange, tool, event);
+            mineAdjacentBlocks(level, pos, state, visited, 0, Config.oreMiningRange, tool, event, pos);
         }
     }
 
-    private void mineAdjacentBlocks(ServerLevel level, BlockPos pos, BlockState state, Set<BlockPos> visited, int depth, int range, ItemStack tool, BlockEvent.BreakEvent event) {
+    private void mineAdjacentBlocks(ServerLevel level, BlockPos pos, BlockState state, Set<BlockPos> visited, int depth, int range, ItemStack tool, BlockEvent.BreakEvent event, BlockPos originalPos) {
         if (depth > range) return;
 
         visited.add(pos);
@@ -90,15 +90,15 @@ public class ExcavationMod {
                     BlockState adjacentState = level.getBlockState(adjacentPos);
 
                     if (!visited.contains(adjacentPos) && adjacentState.getBlock() == state.getBlock()) {
-                        breakBlockWithEnchantments(level, adjacentPos, adjacentState, tool, event);
-                        mineAdjacentBlocks(level, adjacentPos, state, visited, depth + 1, range, tool, event);
+                        breakBlockWithEnchantments(level, adjacentPos, adjacentState, tool, event, originalPos);
+                        mineAdjacentBlocks(level, adjacentPos, state, visited, depth + 1, range, tool, event, originalPos);
                     }
                 }
             }
         }
     }
 
-    private void breakBlockWithEnchantments(ServerLevel level, BlockPos pos, BlockState state, ItemStack tool, BlockEvent.BreakEvent event) {
+    private void breakBlockWithEnchantments(ServerLevel level, BlockPos pos, BlockState state, ItemStack tool, BlockEvent.BreakEvent event, BlockPos originalPos) {
         // Check for Silk Touch enchantment
         boolean silkTouch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0;
 
@@ -117,7 +117,7 @@ public class ExcavationMod {
         }
 
         for (ItemStack drop : drops) {
-            Block.popResource(level, pos, drop);
+            Block.popResource(level, originalPos, drop);
         }
 
         tool.hurtAndBreak(1, event.getPlayer(), (player) -> {
