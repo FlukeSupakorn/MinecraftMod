@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -13,6 +14,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.scores.Score;
 import net.minecraft.world.scores.Scoreboard;
@@ -114,8 +117,22 @@ public class ItemStackHandler {
         String itemName = stack.getHoverName().getString();
         int count = stack.getCount();
         MutableComponent customName = Component.literal(itemName)
-                .withStyle(style -> style.withColor(TextColor.fromRgb(0xFFFFFF))) // White color for the name
-                .append(Component.literal(" x" + count).withStyle(style -> style.withColor(TextColor.fromRgb(0xFFFF00)))); // Yellow color for the count
+                .withStyle(style -> style.withColor(TextColor.fromRgb(0xFFFFFF))); // White color for the name
+
+        if (stack.isDamageableItem()) {
+            int durability = stack.getMaxDamage() - stack.getDamageValue();
+            customName.append(Component.literal(" [" + durability + "/" + stack.getMaxDamage() + "]").withStyle(style -> style.withColor(TextColor.fromRgb(0x00FF00)))); // Green color for durability
+        } else {
+            customName.append(Component.literal(" x" + count).withStyle(style -> style.withColor(TextColor.fromRgb(0xFFFF00)))); // Yellow color for the count
+        }
+
+        if (!EnchantmentHelper.getEnchantments(stack).isEmpty()) {
+            for (Entry<Enchantment, Integer> enchantment : EnchantmentHelper.getEnchantments(stack).entrySet()) {
+                customName.append(Component.literal(" " + enchantment.getKey().getFullname(enchantment.getValue()).getString())
+                        .withStyle(style -> style.withColor(TextColor.fromRgb(0xAA00FF)))); // Purple color for enchantments
+            }
+        }
+
         itemEntity.setCustomName(customName);
         itemEntity.setCustomNameVisible(true);
 
@@ -153,6 +170,10 @@ public class ItemStackHandler {
 
     private static boolean checkAndCombineNearbyItems(ItemEntity itemEntity) {
         ItemStack stack = itemEntity.getItem();
+        if (stack.isDamageableItem()) {
+            return false; // Do not combine tools
+        }
+
         List<ItemEntity> nearbyItems = itemEntity.getCommandSenderWorld().getEntitiesOfClass(ItemEntity.class, new AABB(
                 itemEntity.getX() - STACKING_RADIUS, itemEntity.getY() - STACKING_RADIUS, itemEntity.getZ() - STACKING_RADIUS,
                 itemEntity.getX() + STACKING_RADIUS, itemEntity.getY() + STACKING_RADIUS, itemEntity.getZ() + STACKING_RADIUS
