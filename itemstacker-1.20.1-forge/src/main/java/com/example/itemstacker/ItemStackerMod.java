@@ -17,6 +17,7 @@ public class ItemStackerMod {
         modEventBus.addListener(this::clientSetup);
 
         MinecraftForge.EVENT_BUS.register(new ItemStackHandler());
+        MinecraftForge.EVENT_BUS.register(ItemStackHudRenderer.class);
         KeyBindings.register();
     }
 
