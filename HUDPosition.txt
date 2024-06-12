@@ -1,0 +1,30 @@
+int screenWidth = minecraft.getWindow().getGuiScaledWidth();
+int screenHeight = minecraft.getWindow().getGuiScaledHeight();
+int color = KeyBindings.getHighlightColor();
+
+// Top Left
+int xTopLeft = 10;
+int yTopLeft = 10;
+
+// Top Right
+int xTopRight = screenWidth - fontRenderer.width(statusText) - 10;
+int yTopRight = 10;
+
+// Bottom Left
+int xBottomLeft = 10;
+int yBottomLeft = screenHeight - 20;
+
+// Bottom Right
+int xBottomRight = screenWidth - fontRenderer.width(statusText) - 10;
+int yBottomRight = screenHeight - 20;
+
+// Top Center
+int xTopCenter = (screenWidth / 2) - (fontRenderer.width(statusText) / 2);
+int yTopCenter = 10;
+
+// Upper Toolbar
+int xUpperToolbar = 10; // Adjust as needed
+int yUpperToolbar = 30; // Adjust as needed based on toolbar height
+
+// Example of using one of the positions, e.g., Top Right:
+guiGraphics.drawString(fontRenderer, statusText, xTopRight, yTopRight, color, true);
