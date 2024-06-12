@@ -17,6 +17,7 @@ public class MobSpawnHighlighterMod {
         modEventBus.addListener(this::clientSetup);
 
         MinecraftForge.EVENT_BUS.register(new BlockHighlighter());
+        MinecraftForge.EVENT_BUS.register(MobSpawnHighlighterHudRenderer.class); // Register the HUD renderer
         KeyBindings.register();
     }
 

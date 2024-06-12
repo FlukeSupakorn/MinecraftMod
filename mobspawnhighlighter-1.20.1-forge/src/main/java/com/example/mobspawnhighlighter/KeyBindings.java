@@ -6,11 +6,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,6 +24,7 @@ public class KeyBindings {
     );
 
     public static boolean highlightEnabled = false;
+    private static long lastToggleTime = 0;
 
     public static void register() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(KeyBindings::onClientSetup);
@@ -35,8 +32,8 @@ public class KeyBindings {
     }
 
     private static void onClientSetup(final FMLClientSetupEvent event) {
-        net.minecraft.client.Minecraft.getInstance().options.keyMappings =
-                addKeyMapping(net.minecraft.client.Minecraft.getInstance().options.keyMappings, TOGGLE_HIGHLIGHT);
+        Minecraft.getInstance().options.keyMappings =
+                addKeyMapping(Minecraft.getInstance().options.keyMappings, TOGGLE_HIGHLIGHT);
     }
 
     private static KeyMapping[] addKeyMapping(KeyMapping[] original, KeyMapping keyMapping) {
@@ -51,31 +48,20 @@ public class KeyBindings {
         if (event.phase == TickEvent.Phase.END) {
             if (TOGGLE_HIGHLIGHT.consumeClick()) {
                 highlightEnabled = !highlightEnabled;
-                String statusMessage = "Mob Spawn Highlighter is now " + (highlightEnabled ? "enabled" : "disabled");
-                sendMessageToPlayer(statusMessage, "white");
+                lastToggleTime = System.currentTimeMillis();
             }
         }
     }
 
-    private static void sendMessageToPlayer(String message, String color) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player != null) {
-            int colorCode;
-            switch (color.toLowerCase()) {
-                case "red":
-                    colorCode = 0xFF5555;
-                    break;
-                case "green":
-                    colorCode = 0x55FF55;
-                    break;
-                case "yellow":
-                    colorCode = 0xFFFF00;
-                    break;
-                default:
-                    colorCode = 0xFFFFFF;
-            }
-            Component chatMessage = Component.literal(message).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(colorCode)));
-            mc.player.sendSystemMessage(chatMessage);
-        }
+    public static long getLastToggleTime() {
+        return lastToggleTime;
+    }
+
+    public static String getHighlightStatus() {
+        return highlightEnabled ? "enabled" : "disabled";
+    }
+
+    public static int getHighlightColor() {
+        return highlightEnabled ? 0x55FF55 : 0xFF5555;
     }
 }
