@@ -44,6 +44,7 @@ public class ExcavationMod {
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(ExcavationParticleHandler.class);
+        MinecraftForge.EVENT_BUS.register(ExcavationHudRenderer.class); // Register the HUD renderer
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 

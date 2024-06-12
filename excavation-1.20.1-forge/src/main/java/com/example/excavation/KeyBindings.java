@@ -5,9 +5,6 @@ import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.client.KeyMapping;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -49,28 +46,8 @@ public class KeyBindings {
         if (event.phase == TickEvent.Phase.END) {
             if (TOGGLE_ORE_MINING.consumeClick()) {
                 oreMiningEnabled = !oreMiningEnabled;
-                String statusMessage = "Ore mining is now " + (oreMiningEnabled ? "enabled" : "disabled");
-                sendMessageToPlayer(statusMessage, oreMiningEnabled ? "green" : "red");
+                ExcavationHudRenderer.updateLastToggleTime();
             }
-        }
-    }
-
-    private static void sendMessageToPlayer(String message, String color) {
-        net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-        if (mc.player != null) {
-            int colorCode;
-            switch (color.toLowerCase()) {
-                case "red":
-                    colorCode = 0xFF5555;
-                    break;
-                case "green":
-                    colorCode = 0x55FF55;
-                    break;
-                default:
-                    colorCode = 0xFFFFFF;
-            }
-            Component chatMessage = Component.literal(message).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(colorCode)));
-            mc.player.sendSystemMessage(chatMessage);
         }
     }
 }
