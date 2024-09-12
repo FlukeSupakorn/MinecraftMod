@@ -3,6 +3,21 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/MinecraftMod.iml" filepath="$PROJECT_DIR$/.idea/MinecraftMod.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bigchest-1.20.1-forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/bigchest-1.20.1-forge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bigchest-1.20.1-forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/bigchest-1.20.1-forge.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/excavation-1.20.1-forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/excavation-1.20.1-forge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/excavation-1.20.1-forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/excavation-1.20.1-forge.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/excavation-1.21.1-neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/excavation-1.21.1-neoforge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/excavation.main.iml" filepath="$PROJECT_DIR$/.idea/modules/excavation.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/excavation.test.iml" filepath="$PROJECT_DIR$/.idea/modules/excavation.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/itemnotifier-1.20.1-forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/itemnotifier-1.20.1-forge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/itemnotifier-1.20.1-forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/itemnotifier-1.20.1-forge.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/itemstacker-1.20.1-forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/itemstacker-1.20.1-forge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/itemstacker-1.20.1-forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/itemstacker-1.20.1-forge.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobspawnhighlighter-1.20.1-forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mobspawnhighlighter-1.20.1-forge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobspawnhighlighter-1.20.1-forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/mobspawnhighlighter-1.20.1-forge.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobstacker-1.20.1-forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mobstacker-1.20.1-forge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobstacker-1.20.1-forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/mobstacker-1.20.1-forge.test.iml" />
     </modules>
   </component>
 </project>
