@@ -16,7 +16,7 @@ import net.minecraft.entity.EntityType;
 @Mixin(ItemEntity.class)
 public class ItemEntityMixin {
     private boolean hasLanded = false;
-    private static final double MERGE_RADIUS = 1.0; // 3x3x3 area (1 block radius)
+    private static final double MERGE_RADIUS = 5.0; // 3x3x3 area (1 block radius)
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void onTick(CallbackInfo ci) {
@@ -55,23 +55,10 @@ public class ItemEntityMixin {
                     // Check if items can be merged
                     if (ItemStack.areItemsEqual(stack1, stack2)) {
                         int totalCount = stack1.getCount() + stack2.getCount();
-                        int maxStackSize = stack1.getMaxCount();
                         
-                        // Create new item stack with combined count
+                        // Create new item stack with combined count (unlimited)
                         ItemStack newStack = stack1.copy();
-                        if (totalCount <= maxStackSize) {
-                            newStack.setCount(totalCount);
-                        } else {
-                            newStack.setCount(maxStackSize);
-                            // Create second stack for overflow
-                            ItemStack overflowStack = stack1.copy();
-                            overflowStack.setCount(totalCount - maxStackSize);
-                            
-                            // Spawn overflow item
-                            ItemEntity overflowEntity = new ItemEntity(world, pos.x, pos.y, pos.z, overflowStack);
-                            overflowEntity.setVelocity(0, 0.1, 0); // Small upward velocity
-                            world.spawnEntity(overflowEntity);
-                        }
+                        newStack.setCount(totalCount);
 
                         // Spawn new combined item
                         ItemEntity newEntity = new ItemEntity(world, pos.x, pos.y, pos.z, newStack);
