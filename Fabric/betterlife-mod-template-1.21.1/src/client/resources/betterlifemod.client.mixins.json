@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "github.flukesupakorn.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ItemEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
